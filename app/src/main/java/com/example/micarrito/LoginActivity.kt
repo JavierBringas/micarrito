@@ -14,7 +14,6 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +26,20 @@ class LoginActivity : AppCompatActivity() {
         val submitButton = findViewById<Button>(R.id.submitButton)
         val signupButton = findViewById<TextView>(R.id.signupTextView)
 
-
         submitButton.setOnClickListener {
-            login(editTextTextEmailAddress.text.toString(), editTextTextPassword.text.toString())
+            val email = editTextTextEmailAddress.text.toString()
+            val password = editTextTextPassword.text.toString()
+
+            if (email.isBlank() || password.isBlank()) {
+                Toast.makeText(
+                    baseContext,
+                    "Email and password cannot be empty.",
+                    Toast.LENGTH_LONG
+                ).show()
+                return@setOnClickListener
+            }
+
+            login(email, password)
         }
 
         signupButton.setOnClickListener {
@@ -43,11 +53,15 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = firebaseAuth.currentUser
+//                    val user = firebaseAuth.currentUser
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(baseContext, "Invalid credentials", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        baseContext,
+                        "Invalid credentials.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
     }

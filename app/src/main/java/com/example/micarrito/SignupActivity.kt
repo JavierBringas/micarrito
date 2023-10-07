@@ -11,12 +11,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-val EMAIL_REGULAR_EXPRESSION = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
-
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +28,18 @@ class SignupActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             val email = editTextTextEmailAddress.text.toString()
+            val password = editTextTextPassword.text.toString()
 
-            if (!isValidEmail(email)) {
-                Toast.makeText(baseContext, "Invalid email format", Toast.LENGTH_LONG).show()
+            if (email.isBlank() || password.isBlank()) {
+                Toast.makeText(
+                    baseContext,
+                    "Email and password cannot be empty.",
+                    Toast.LENGTH_LONG
+                ).show()
                 return@setOnClickListener
             }
 
-            signup(email, editTextTextPassword.text.toString())
+            signup(email, password)
         }
 
         loginButton.setOnClickListener {
@@ -46,20 +48,17 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return email.matches(EMAIL_REGULAR_EXPRESSION.toRegex())
-    }
-
     private fun signup(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+//                    val user = firebaseAuth.currentUser
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(
                         baseContext,
-                        "Something went wrong... Try again later",
+                        task.exception?.message,
                         Toast.LENGTH_LONG
                     ).show()
                 }
