@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
+import com.example.micarrito.utils.functions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -57,11 +57,7 @@ class SignupActivity : AppCompatActivity() {
         val password = editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            Toast.makeText(
-                baseContext,
-                "Email and password cannot be empty.",
-                Toast.LENGTH_LONG
-            ).show()
+            functions.showErrorMessage(baseContext, "Email and password cannot be empty.")
         } else {
             signup(email, password)
         }
@@ -88,11 +84,7 @@ class SignupActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(
-                        baseContext,
-                        task.exception?.message,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    functions.showErrorMessage(baseContext, task.exception?.message)
                 }
             }
     }

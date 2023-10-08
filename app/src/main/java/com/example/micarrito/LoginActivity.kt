@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import com.example.micarrito.utils.functions
 
 /**
  * LoginActivity allows users to log in to the application by providing their email and password.
@@ -58,11 +55,7 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            Toast.makeText(
-                baseContext,
-                "Email and password cannot be empty.",
-                Toast.LENGTH_LONG
-            ).show()
+            functions.showErrorMessage(baseContext, "Email and password cannot be empty.")
         } else {
             login(email, password)
         }
@@ -87,11 +80,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(
-                        baseContext,
-                        "Invalid credentials.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    functions.showErrorMessage(baseContext, "Invalid credentials.")
                 }
             }
     }
