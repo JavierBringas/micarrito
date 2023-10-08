@@ -1,4 +1,4 @@
-package com.example.micarrito
+package com.example.micarrito.model
 
 data class ShoppingList(
     val name: String,

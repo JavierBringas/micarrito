@@ -9,23 +9,25 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val auth = FirebaseAuth.getInstance()
+
+    private val editTextTextEmailAddress by lazy { findViewById<EditText>(R.id.editTextTextEmailAddress) }
+    private val editTextTextPassword by lazy { findViewById<EditText>(R.id.editTextTextPassword) }
+    private val submitButton by lazy { findViewById<Button>(R.id.submitButton) }
+    private val signupButton by lazy { findViewById<TextView>(R.id.signupTextView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        setListeners()
+    }
 
-        firebaseAuth = Firebase.auth
-
-        val editTextTextEmailAddress = findViewById<EditText>(R.id.editTextTextEmailAddress)
-        val editTextTextPassword = findViewById<EditText>(R.id.editTextTextPassword)
-        val submitButton = findViewById<Button>(R.id.submitButton)
-        val signupButton = findViewById<TextView>(R.id.signupTextView)
-
+    private fun setListeners() {
         submitButton.setOnClickListener {
             val email = editTextTextEmailAddress.text.toString()
             val password = editTextTextPassword.text.toString()
@@ -46,14 +48,12 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun login(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-//                    val user = firebaseAuth.currentUser
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {

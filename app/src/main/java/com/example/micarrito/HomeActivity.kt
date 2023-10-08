@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.micarrito.adapter.ShoppingListAdapter
+import com.example.micarrito.model.ShoppingList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -15,10 +17,13 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        start()
+    }
 
-        if (auth.currentUser != null) {
-            val id = auth.currentUser?.uid
-            load(id!!)
+    private fun start() {
+        val user = auth.currentUser
+        if (user != null) {
+            load(user.uid)
         }
     }
 

@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
+
+    private val loginButton by lazy { findViewById<Button>(R.id.loginButton) }
+    private val signupButton by lazy { findViewById<Button>(R.id.signupButton) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setListeners()
+    }
 
-        val loginButton = findViewById<Button>(R.id.loginButton)
-        val signupButton = findViewById<Button>(R.id.signupButton);
-
+    private fun setListeners() {
         loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -23,4 +27,5 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

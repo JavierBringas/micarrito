@@ -8,25 +8,25 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 class SignupActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    private val editTextTextEmailAddress by lazy { findViewById<EditText>(R.id.editTextTextEmailAddress) }
+    private val editTextTextPassword by lazy { findViewById<EditText>(R.id.editTextTextPassword) }
+    private val submitButton by lazy { findViewById<Button>(R.id.submitButton) }
+    private val loginButton by lazy { findViewById<TextView>(R.id.loginTextView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+        setListeners()
+    }
 
-        val editTextTextEmailAddress = findViewById<EditText>(R.id.editTextTextEmailAddress)
-        val editTextTextPassword = findViewById<EditText>(R.id.editTextTextPassword)
-        val submitButton = findViewById<Button>(R.id.submitButton)
-        val loginButton = findViewById<TextView>(R.id.loginTextView)
-
+    private fun setListeners() {
         submitButton.setOnClickListener {
             val email = editTextTextEmailAddress.text.toString()
             val password = editTextTextPassword.text.toString()
@@ -80,12 +80,12 @@ class SignupActivity : AppCompatActivity() {
                     shoppingListsReference
                         .document(document.id)
                         .collection("products")
-                        .add(hashMapOf(
-                            "name" to "Product"
-                        ))
+                        .add(
+                            hashMapOf(
+                                "name" to "Product"
+                            )
+                        )
                 }
         }
     }
-
-
 }

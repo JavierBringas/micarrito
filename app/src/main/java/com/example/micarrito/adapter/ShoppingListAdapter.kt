@@ -1,8 +1,10 @@
-package com.example.micarrito
+package com.example.micarrito.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.micarrito.R
+import com.example.micarrito.model.ShoppingList
 
 class ShoppingListAdapter(private val shoppingListList: List<ShoppingList>) :
     RecyclerView.Adapter<ShoppingListViewHolder>() {
