@@ -5,6 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
+/**
+ * MainActivity represents the main entry point of the application.
+ *
+ * It displays options for users to either log in or sign up.
+ *
+ * Clicking on the "Log In" button navigates the user to the LoginActivity.
+ *
+ * Clicking on the "Sign Up" button navigates the user to the SignupActivity.
+ */
 class MainActivity : AppCompatActivity() {
 
     private val loginButton by lazy { findViewById<Button>(R.id.loginButton) }
@@ -16,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         setListeners()
     }
 
+    /**
+     * Sets click listeners.
+     */
     private fun setListeners() {
         loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)

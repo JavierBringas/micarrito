@@ -12,6 +12,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ * LoginActivity allows users to log in to the application by providing their email and password.
+ * After successful login, users are redirected to the 'HomeActivity'.
+ */
 class LoginActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
@@ -27,21 +31,12 @@ class LoginActivity : AppCompatActivity() {
         setListeners()
     }
 
+    /**
+     * Sets click listeners.
+     */
     private fun setListeners() {
         submitButton.setOnClickListener {
-            val email = editTextTextEmailAddress.text.toString()
-            val password = editTextTextPassword.text.toString()
-
-            if (email.isBlank() || password.isBlank()) {
-                Toast.makeText(
-                    baseContext,
-                    "Email and password cannot be empty.",
-                    Toast.LENGTH_LONG
-                ).show()
-                return@setOnClickListener
-            }
-
-            login(email, password)
+            attemptLogin()
         }
 
         signupButton.setOnClickListener {
@@ -50,6 +45,41 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Attempts to log in the user using the provided email and password.
+     *
+     * If either the email or password is empty, it displays an error message.
+     *
+     * If both email and password are provided, it calls the 'login' function
+     * to perform the login attempt.
+     */
+    private fun attemptLogin() {
+        val email = editTextTextEmailAddress.text.toString()
+        val password = editTextTextPassword.text.toString()
+
+        if (email.isBlank() || password.isBlank()) {
+            Toast.makeText(
+                baseContext,
+                "Email and password cannot be empty.",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            login(email, password)
+        }
+    }
+
+
+    /**
+     * Attempts to log in the user with the provided email and password using Firebase
+     * Authentication.
+     *
+     * If the login is successful, it navigates to the 'HomeActivity'.
+     *
+     * If the login fails due to invalid credentials, it displays an error message.
+     *
+     * @param email email of the user.
+     * @param password password of the user.
+     */
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->

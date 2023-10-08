@@ -9,6 +9,10 @@ import com.example.micarrito.model.ShoppingList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * HomeActivity displays the shopping lists associated with the logged-in user.
+ * It retrieves shopping lists from Firestore and displays them using a RecyclerView.
+ */
 class HomeActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
@@ -20,6 +24,9 @@ class HomeActivity : AppCompatActivity() {
         start()
     }
 
+    /**
+     * Runs the activity.
+     */
     private fun start() {
         val user = auth.currentUser
         if (user != null) {
@@ -27,6 +34,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Loads the shopping lists associated with the user from Firestore based on the provided user
+     * ID.
+     *
+     * Retrieves shopping lists from the 'shoppingLists' collection and initializes the
+     * RecyclerView to display them.
+     *
+     * @param id ID of the user used to identify their shopping lists in Firestore.
+     */
     private fun load(id: String) {
         db.collection("users")
             .document(id)
@@ -42,6 +58,10 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Initializes the RecyclerView to display shopping lists.
+     * @param shoppingListList The list of shopping lists to display.
+     */
     private fun initializeRecyclerView(shoppingListList: ArrayList<ShoppingList>) {
         val recyclerView = findViewById<RecyclerView>(R.id.shoppingListRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
