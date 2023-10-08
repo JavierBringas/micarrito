@@ -55,4 +55,7 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don not specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // FirebaseUI for Cloud Firestore
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
 }

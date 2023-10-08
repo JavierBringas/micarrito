@@ -9,17 +9,18 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class SignupActivity : AppCompatActivity() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
-        firebaseAuth = Firebase.auth
 
         val editTextTextEmailAddress = findViewById<EditText>(R.id.editTextTextEmailAddress)
         val editTextTextPassword = findViewById<EditText>(R.id.editTextTextPassword)
@@ -49,10 +50,10 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun signup(email: String, password: String) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-//                    val user = firebaseAuth.currentUser
+                    initializeShoppingList()
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -64,4 +65,27 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun initializeShoppingList() {
+        val user = auth.currentUser
+
+        if (user != null) {
+            val shoppingListsReference =
+                db.collection("users")
+                    .document(user.uid)
+                    .collection("shoppingLists")
+
+            shoppingListsReference.add(hashMapOf("name" to "Shopping list"))
+                .addOnSuccessListener { document ->
+                    shoppingListsReference
+                        .document(document.id)
+                        .collection("products")
+                        .add(hashMapOf(
+                            "name" to "Product"
+                        ))
+                }
+        }
+    }
+
+
 }
