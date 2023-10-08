@@ -51,4 +51,8 @@ dependencies {
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don not specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore-ktx")
 }
