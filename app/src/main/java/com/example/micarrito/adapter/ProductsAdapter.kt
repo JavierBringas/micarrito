@@ -11,10 +11,11 @@ import com.example.micarrito.model.Product
  *
  * @property products The list of products to be displayed.
  */
-class ProductsAdapter(private val products: List<Product>) :
+class ProductsAdapter(
+    private val products: List<Product>,
+    private val onClickListener: (Product) -> Unit
+) :
     RecyclerView.Adapter<ProductViewHolder>() {
-
-    constructor() : this(emptyList())
 
     /**
      * Called when RecyclerView needs a new [ProductViewHolder] of the given type to represent
@@ -49,6 +50,6 @@ class ProductsAdapter(private val products: List<Product>) :
      */
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val item = products[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
     }
 }

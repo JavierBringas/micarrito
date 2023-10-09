@@ -76,42 +76,11 @@ class SignupActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    initializeShoppingList()
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
                     functions.message(baseContext, task.exception?.message)
                 }
             }
-    }
-
-    /**
-     * Initializes the shopping list for the current user in Firestore.
-     *
-     * Creates a new shopping list with a default name and adds a default product to it.
-     *
-     * This function is called upon successful user registration.
-     */
-    private fun initializeShoppingList() {
-        val user = auth.currentUser
-
-        if (user != null) {
-            val shoppingListsReference =
-                db.collection("users")
-                    .document(user.uid)
-                    .collection("shoppingLists")
-
-            shoppingListsReference.add(hashMapOf("name" to "Shopping list"))
-                .addOnSuccessListener { document ->
-                    shoppingListsReference
-                        .document(document.id)
-                        .collection("products")
-                        .add(
-                            hashMapOf(
-                                "name" to "Product"
-                            )
-                        )
-                }
-        }
     }
 }

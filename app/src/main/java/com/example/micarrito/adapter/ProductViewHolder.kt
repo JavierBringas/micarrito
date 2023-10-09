@@ -1,9 +1,7 @@
 package com.example.micarrito.adapter
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.micarrito.R
 import com.example.micarrito.databinding.ProductItemBinding
 import com.example.micarrito.model.Product
 
@@ -21,7 +19,10 @@ class ProductViewHolder(view: View) : ViewHolder(view) {
      *
      * @param shoppingListModel The [ShoppingList] model containing the data to be displayed.
      */
-    fun render(productModel: Product) {
+    fun render(productModel: Product, onClickListener: (Product) -> Unit) {
         binding.nameTextView.text = productModel.name
+        binding.deleteButton.setOnClickListener {
+            onClickListener(productModel)
+        }
     }
 }
