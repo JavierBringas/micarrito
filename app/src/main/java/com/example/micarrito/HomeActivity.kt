@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.micarrito.adapter.ShoppingListAdapter
-import com.example.micarrito.model.ShoppingList
+import com.example.micarrito.adapter.ProductsAdapter
+import com.example.micarrito.model.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * HomeActivity displays the shopping lists associated with the logged-in user.
- * It retrieves shopping lists from Firestore and displays them using a RecyclerView.
+ * HomeActivity displays the products associated with the logged-in user.
+ * It retrieves products from Firestore and displays them using a RecyclerView.
  */
 class HomeActivity : AppCompatActivity() {
 
@@ -35,37 +35,37 @@ class HomeActivity : AppCompatActivity() {
     }
 
     /**
-     * Loads the shopping lists associated with the user from Firestore based on the provided user
+     * Loads the products associated with the user from Firestore based on the provided user
      * ID.
      *
-     * Retrieves shopping lists from the 'shoppingLists' collection and initializes the
+     * Retrieves products from the 'products' collection and initializes the
      * RecyclerView to display them.
      *
-     * @param id ID of the user used to identify their shopping lists in Firestore.
+     * @param id ID of the user used to identify their products in Firestore.
      */
     private fun load(id: String) {
         db.collection("users")
             .document(id)
-            .collection("shoppingLists")
+            .collection("products")
             .get()
             .addOnSuccessListener { documents ->
-                val shoppingListList = ArrayList<ShoppingList>()
+                val products = ArrayList<Product>()
                 for (document in documents) {
-                    val shoppingList = document.toObject(ShoppingList::class.java)
-                    shoppingListList.add(shoppingList)
+                    val product = document.toObject(Product::class.java)
+                    products.add(product)
                 }
-                initializeRecyclerView(shoppingListList)
+                initializeRecyclerView(products)
             }
     }
 
     /**
-     * Initializes the RecyclerView to display shopping lists.
-     * @param shoppingListList The list of shopping lists to display.
+     * Initializes the RecyclerView to display products.
+     * @param products The list of products to display.
      */
-    private fun initializeRecyclerView(shoppingListList: ArrayList<ShoppingList>) {
-        val recyclerView = findViewById<RecyclerView>(R.id.shoppingListRecyclerView)
+    private fun initializeRecyclerView(products: ArrayList<Product>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.productsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ShoppingListAdapter(shoppingListList)
+        recyclerView.adapter = ProductsAdapter(products)
     }
 
 }

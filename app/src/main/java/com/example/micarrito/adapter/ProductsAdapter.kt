@@ -4,31 +4,31 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.micarrito.R
-import com.example.micarrito.model.ShoppingList
+import com.example.micarrito.model.Product
 
 /**
- * Adapter class for displaying a list of shopping lists in a RecyclerView.
+ * Adapter class for displaying a list of products in a RecyclerView.
  *
- * @property shoppingListList The list of shopping lists to be displayed.
+ * @property products The list of products to be displayed.
  */
-class ShoppingListAdapter(private val shoppingListList: List<ShoppingList>) :
-    RecyclerView.Adapter<ShoppingListViewHolder>() {
+class ProductsAdapter(private val products: List<Product>) :
+    RecyclerView.Adapter<ProductViewHolder>() {
 
     constructor() : this(emptyList())
 
     /**
-     * Called when RecyclerView needs a new [ShoppingListViewHolder] of the given type to represent
+     * Called when RecyclerView needs a new [ProductViewHolder] of the given type to represent
      * an item.
      *
      * @param parent The parent view group that the View will eventually be attached to.
      * @param viewType The view type of the new View.
-     * @return A new [ShoppingListViewHolder] that holds a View of the given view type.
+     * @return A new [ProductViewHolder] that holds a View of the given view type.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ShoppingListViewHolder(
+        return ProductViewHolder(
             layoutInflater.inflate(
-                R.layout.item_shopping_list, parent, false
+                R.layout.product_item, parent, false
             )
         )
     }
@@ -38,17 +38,17 @@ class ShoppingListAdapter(private val shoppingListList: List<ShoppingList>) :
      *
      * @return The total number of items in the data set.
      */
-    override fun getItemCount(): Int = shoppingListList.size;
+    override fun getItemCount(): Int = products.size;
 
     /**
      * Called by RecyclerView to display the data at the specified position.
      *
-     * @param holder The [ShoppingListViewHolder] which should be updated to represent
+     * @param holder The [ProductViewHolder] which should be updated to represent
      * the contents of the item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: ShoppingListViewHolder, position: Int) {
-        val item = shoppingListList[position]
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        val item = products[position]
         holder.render(item)
     }
 }
