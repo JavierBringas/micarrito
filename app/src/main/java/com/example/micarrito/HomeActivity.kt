@@ -104,6 +104,9 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Adds a product to the Firestore collection of the user, validating the product name.
+     */
     private fun add() {
         val productName = binding.editTextTextProductName.text.toString()
         if (productName.isBlank()) {
