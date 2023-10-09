@@ -3,9 +3,7 @@ package com.example.micarrito
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import com.example.micarrito.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.example.micarrito.utils.functions
 
@@ -17,14 +15,12 @@ class LoginActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
 
-    private val editTextTextEmailAddress by lazy { findViewById<EditText>(R.id.editTextTextEmailAddress) }
-    private val editTextTextPassword by lazy { findViewById<EditText>(R.id.editTextTextPassword) }
-    private val submitButton by lazy { findViewById<Button>(R.id.submitButton) }
-    private val signupButton by lazy { findViewById<TextView>(R.id.signupTextView) }
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setListeners()
     }
 
@@ -32,11 +28,11 @@ class LoginActivity : AppCompatActivity() {
      * Sets click listeners.
      */
     private fun setListeners() {
-        submitButton.setOnClickListener {
+        binding.submitButton.setOnClickListener {
             attemptLogin()
         }
 
-        signupButton.setOnClickListener {
+        binding.signupTextView.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
@@ -51,8 +47,8 @@ class LoginActivity : AppCompatActivity() {
      * to perform the login attempt.
      */
     private fun attemptLogin() {
-        val email = editTextTextEmailAddress.text.toString()
-        val password = editTextTextPassword.text.toString()
+        val email = binding.editTextTextEmailAddress.text.toString()
+        val password = binding.editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
             functions.showErrorMessage(baseContext, "Email and password cannot be empty.")

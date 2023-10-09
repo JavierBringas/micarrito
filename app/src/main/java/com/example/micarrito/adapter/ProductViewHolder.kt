@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.micarrito.R
+import com.example.micarrito.databinding.ProductItemBinding
 import com.example.micarrito.model.Product
 
 /**
@@ -13,10 +14,7 @@ import com.example.micarrito.model.Product
  */
 class ProductViewHolder(view: View) : ViewHolder(view) {
 
-    /**
-     * Reference to the TextView for displaying the product name.
-     */
-    val productName = view.findViewById<TextView>(R.id.nameTextView)
+    val binding = ProductItemBinding.bind(view)
 
     /**
      * Renders the data of a product item by setting the name of the shopping list.
@@ -24,6 +22,6 @@ class ProductViewHolder(view: View) : ViewHolder(view) {
      * @param shoppingListModel The [ShoppingList] model containing the data to be displayed.
      */
     fun render(productModel: Product) {
-        productName.text = productModel.name
+        binding.nameTextView.text = productModel.name
     }
 }

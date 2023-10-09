@@ -3,8 +3,8 @@ package com.example.micarrito
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.micarrito.adapter.ProductsAdapter
+import com.example.micarrito.databinding.ActivityHomeBinding
 import com.example.micarrito.model.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,9 +18,12 @@ class HomeActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         start()
     }
 
@@ -63,9 +66,8 @@ class HomeActivity : AppCompatActivity() {
      * @param products The list of products to display.
      */
     private fun initializeRecyclerView(products: ArrayList<Product>) {
-        val recyclerView = findViewById<RecyclerView>(R.id.productsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ProductsAdapter(products)
+        binding.productsRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.productsRecyclerView.adapter = ProductsAdapter(products)
     }
 
 }
