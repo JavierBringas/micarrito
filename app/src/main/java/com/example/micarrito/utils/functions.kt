@@ -5,12 +5,12 @@ import android.widget.Toast
 
 object functions {
     /**
-     * Displays an error message as a Toast with the specified message.
+     * Displays a message as a Toast with the specified message.
      *
      * @param context The [Context] in which the Toast should be displayed.
-     * @param message The error message to be displayed.
+     * @param message The message to be displayed.
      */
-    fun showErrorMessage(context: Context, message: String?) {
+    fun message(context: Context, message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            functions.showErrorMessage(baseContext, "Email and password cannot be empty.")
+            functions.message(baseContext, "Email and password cannot be empty.")
         } else {
             login(email, password)
         }
@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    functions.showErrorMessage(baseContext, "Invalid credentials.")
+                    functions.message(baseContext, "Invalid credentials.")
                 }
             }
     }

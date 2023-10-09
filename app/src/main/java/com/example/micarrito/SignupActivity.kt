@@ -53,7 +53,7 @@ class SignupActivity : AppCompatActivity() {
         val password = binding.editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            functions.showErrorMessage(baseContext, "Email and password cannot be empty.")
+            functions.message(baseContext, "Email and password cannot be empty.")
         } else {
             signup(email, password)
         }
@@ -80,7 +80,7 @@ class SignupActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    functions.showErrorMessage(baseContext, task.exception?.message)
+                    functions.message(baseContext, task.exception?.message)
                 }
             }
     }
