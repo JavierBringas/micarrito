@@ -1,29 +1,32 @@
 package com.example.micarrito
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.micarrito.databinding.ActivitySignupBinding
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.micarrito.databinding.FragmentSignupBinding
 import com.example.micarrito.utils.functions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * SignupActivity allows users to sign up for the application by providing their email and password.
+ * Allows users to sign up for the application by providing their email and password.
  * After successful registration, users are redirected to the 'HomeActivity'.
  */
-class SignupActivity : AppCompatActivity() {
+class SignupFragment : Fragment() {
 
     private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
 
-    private lateinit var binding: ActivitySignupBinding
+    private lateinit var binding: FragmentSignupBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSignupBinding.inflate(inflater, container, false)
         setListeners()
+        return binding.root
     }
 
     /**
@@ -35,8 +38,7 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.loginTextView.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+
         }
     }
 
@@ -53,7 +55,7 @@ class SignupActivity : AppCompatActivity() {
         val password = binding.editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            functions.message(baseContext, "Email and password cannot be empty.")
+            functions.message(requireContext(), "Email and password cannot be empty.")
         } else {
             signup(email, password)
         }
@@ -74,13 +76,13 @@ class SignupActivity : AppCompatActivity() {
      */
     private fun signup(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
+            .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
+                    findNavController().navigate(R.id.action_signupFragment_to_homeFragment)
                 } else {
-                    functions.message(baseContext, task.exception?.message)
+                    functions.message(requireContext(), task.exception?.message)
                 }
             }
     }
+
 }

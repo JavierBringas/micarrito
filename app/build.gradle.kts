@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.example.micarrito"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.micarrito"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -62,4 +62,8 @@ dependencies {
 
     // FirebaseUI for Cloud Firestore
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+
+    // Fragments and Navigation Component
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
 }

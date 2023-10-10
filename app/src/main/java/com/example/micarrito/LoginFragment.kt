@@ -1,27 +1,33 @@
 package com.example.micarrito
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.micarrito.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.micarrito.databinding.FragmentLoginBinding
 import com.example.micarrito.utils.functions
+import com.google.firebase.auth.FirebaseAuth
 
 /**
- * LoginActivity allows users to log in to the application by providing their email and password.
+ * Allows users to log in to the application by providing their email and password.
  * After successful login, users are redirected to the 'HomeActivity'.
  */
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
     private val auth = FirebaseAuth.getInstance()
 
-    private lateinit var binding: ActivityLoginBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private lateinit var binding: FragmentLoginBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
         setListeners()
+        return binding.root
     }
 
     /**
@@ -33,8 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.signupTextView.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
     }
 
@@ -51,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.editTextTextPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            functions.message(baseContext, "Email and password cannot be empty.")
+            functions.message(requireContext(), "Email and password cannot be empty.")
         } else {
             login(email, password)
         }
@@ -71,13 +76,13 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
+            .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
-                    functions.message(baseContext, "Invalid credentials.")
+                    functions.message(requireContext(), "Invalid credentials.")
                 }
             }
     }
+
 }

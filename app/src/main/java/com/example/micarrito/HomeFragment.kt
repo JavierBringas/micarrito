@@ -1,20 +1,24 @@
 package com.example.micarrito
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.micarrito.adapter.ProductsAdapter
-import com.example.micarrito.databinding.ActivityHomeBinding
 import com.example.micarrito.model.Product
 import com.example.micarrito.utils.functions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+import com.example.micarrito.databinding.FragmentHomeBinding
+
 /**
- * HomeActivity displays the products associated with the logged-in user.
+ * Displays the products associated with the logged-in user.
  * It retrieves products from Firestore and displays them using a RecyclerView.
  */
-class HomeActivity : AppCompatActivity() {
+class HomeFragment : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -27,13 +31,15 @@ class HomeActivity : AppCompatActivity() {
      */
     private lateinit var userId: String
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: FragmentHomeBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         start()
+        return binding.root
     }
 
     /**
@@ -84,9 +90,9 @@ class HomeActivity : AppCompatActivity() {
      * @param products The list of products to display.
      */
     private fun setRecyclerView(products: ArrayList<Product>) {
-        binding.productsRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.productsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.productsRecyclerView.adapter =
-            ProductsAdapter(products, { delete(it.document) })
+            ProductsAdapter(products) { delete(it.document) }
     }
 
     /**
@@ -110,7 +116,7 @@ class HomeActivity : AppCompatActivity() {
     private fun add() {
         val productName = binding.editTextTextProductName.text.toString()
         if (productName.isBlank()) {
-            functions.message(baseContext, "Product names must not be blank.")
+            functions.message(requireContext(), "Product names must not be blank.")
         } else {
             db.collection("users")
                 .document(userId)
