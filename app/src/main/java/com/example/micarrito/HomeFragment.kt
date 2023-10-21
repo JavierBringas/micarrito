@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Starts the activity checking if the user is authenticated initializating listeners and
+     * Starts the fragment checking if the user is authenticated initializating listeners and
      * loading products associated with the current user from Firestore.
      */
     private fun start() {

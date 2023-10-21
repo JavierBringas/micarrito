@@ -25,8 +25,22 @@ class SignupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
-        setListeners()
+        start()
         return binding.root
+    }
+
+    /**
+     * Starts the fragment by checking if the user is already authenticated.
+     *
+     * If the user is authenticated, it navigates them to the home screen (homeFragment). If not, it
+     * sets up click listeners for signup action or navigation to the login screen.
+     */
+    private fun start() {
+        if (auth.currentUser != null) {
+            findNavController().navigate(R.id.action_signupFragment_to_homeFragment)
+        } else {
+            setListeners()
+        }
     }
 
     /**
@@ -76,7 +90,7 @@ class SignupFragment : Fragment() {
      */
     private fun signup(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_signupFragment_to_homeFragment)
                 } else {

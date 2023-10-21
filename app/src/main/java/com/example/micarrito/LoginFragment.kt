@@ -18,7 +18,6 @@ class LoginFragment : Fragment() {
 
     private val auth = FirebaseAuth.getInstance()
 
-
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -26,8 +25,22 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        setListeners()
+        start()
         return binding.root
+    }
+
+    /**
+     * Starts the fragment by checking if the user is already authenticated.
+     *
+     * If the user is authenticated, it navigates them to the home screen (homeFragment). If not, it
+     * sets up click listeners for login action or navigation to the signup screen.
+     */
+    private fun start() {
+        if (auth.currentUser != null) {
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        } else {
+            setListeners()
+        }
     }
 
     /**

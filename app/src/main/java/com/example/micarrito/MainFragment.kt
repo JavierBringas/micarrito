@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.micarrito.databinding.FragmentMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Represents the main entry point of the application.
@@ -19,6 +20,8 @@ import com.example.micarrito.databinding.FragmentMainBinding
  */
 class MainFragment : Fragment() {
 
+    private val auth = FirebaseAuth.getInstance()
+
     private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
@@ -26,8 +29,23 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        setListeners()
+        start()
         return binding.root
+    }
+
+    /**
+     * Starts the fragment by checking if the user is already authenticated.
+     *
+     * If the user is authenticated, it navigates them to the home screen (homeFragment). If not, it
+     * sets up click listeners for the "Log In" and "Sign Up" buttons, allowing navigation to the
+     * respective screens.
+     */
+    private fun start() {
+        if (auth.currentUser != null) {
+            findNavController().navigate(R.id.action_mainFragment_to_homeFragment)
+        } else {
+            setListeners()
+        }
     }
 
     /**
