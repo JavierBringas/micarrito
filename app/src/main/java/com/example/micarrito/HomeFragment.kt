@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.micarrito.adapter.ProductsAdapter
 import com.example.micarrito.model.Product
@@ -48,6 +49,10 @@ class HomeFragment : Fragment() {
     private fun setListeners() {
         binding.addButton.setOnClickListener {
             add()
+        }
+
+        binding.logoutButton.setOnClickListener {
+            logout()
         }
     }
 
@@ -127,6 +132,15 @@ class HomeFragment : Fragment() {
                     load()
                 }
         }
+    }
+
+    /**
+     * Logs the user out by signing them out of their current session and navigates to the main
+     * screen.
+     */
+    private fun logout() {
+        auth.signOut()
+        findNavController().navigate(R.id.action_homeFragment_to_mainFragment)
     }
 
 }
