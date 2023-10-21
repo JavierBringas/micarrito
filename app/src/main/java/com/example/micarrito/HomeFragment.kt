@@ -54,6 +54,10 @@ class HomeFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             logout()
         }
+
+        binding.deleteAllButton.setOnClickListener {
+            deleteAll()
+        }
     }
 
     /**
@@ -141,6 +145,21 @@ class HomeFragment : Fragment() {
     private fun logout() {
         auth.signOut()
         findNavController().navigate(R.id.action_homeFragment_to_mainFragment)
+    }
+
+    /**
+     * Deletes all products associated with the user in Firestore.
+     */
+    private fun deleteAll() {
+        db.collection("users")
+            .document(userId)
+            .collection("products")
+            .get()
+            .addOnSuccessListener { documents ->
+                documents.forEach { document ->
+                    delete(document.id)
+                }
+            }
     }
 
 }
