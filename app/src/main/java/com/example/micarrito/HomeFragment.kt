@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +45,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Sets click listeners except those related to each product (e.g.: for deleting a product).
+     * Sets click listeners except those related to each product (e.g.: for deleting all products).
      */
     private fun setListeners() {
         binding.addButton.setOnClickListener {
@@ -134,6 +135,7 @@ class HomeFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     document.update("document", document.id)
                     load()
+                    binding.editTextTextProductName.setText("");
                 }
         }
     }

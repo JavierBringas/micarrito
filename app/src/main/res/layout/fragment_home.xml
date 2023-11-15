@@ -1,75 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
     tools:context=".HomeFragment">
 
-    <Button
-        android:id="@+id/deleteAllButton"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="Delete all"
-        app:layout_constraintBottom_toTopOf="@+id/productsRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144" />
+        android:layout_marginBottom="24dp">
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold"></TextView>
+
+        <ImageButton
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-3dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/logout"
+            android:padding="17dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_logout_24" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log out"
-        app:layout_constraintBottom_toTopOf="@+id/productsRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.093" />
+        android:layout_marginBottom="16dp"
+        android:paddingBottom="8dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editTextTextProductName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="16"
+            android:hint="@string/product_name_hint"
+            android:maxLines="1"
+            android:paddingLeft="12dp"
+            android:singleLine="true" />
+
+        <ImageButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="18.5dp"
+            android:background="@drawable/baseline_add_shopping_cart_24"
+            android:padding="14dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="8dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="@+id/productsRecyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/productsRecyclerView"
-        app:layout_constraintVertical_bias="1.0">
+        android:gravity="center"
+        android:paddingBottom="32dp">
 
-        <EditText
-            android:id="@+id/editTextTextProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Product Name"
-
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            app:layout_constraintStart_toEndOf="@+id/editTextTextProductName"
-            app:layout_constraintVertical_bias="1.0" />
-
+        <ImageButton
+            android:id="@+id/deleteAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/clear"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_clear_24" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
