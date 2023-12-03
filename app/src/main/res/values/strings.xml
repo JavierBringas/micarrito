@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">micarrito</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="product_name_hint">Product Name</string>
+    <string name="simplify_shopping">Simplify your shopping and maximize your life now.</string>
+    <string name="go_ahead">Go ahead.</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="no_account">Do not you have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="your_shopping_list">Your minimalist shopping list.</string>
+    <string name="join_now">Join now to simplify shopping and enhance your life!</string>
+    <string name="no_regrets">No regrets, guaranteed.</string>
+    <string name="log_in_instead">Do you have already an account?</string>
+    <string name="log_in_link">Log in</string>
+    <string name="product">Product</string>
+    <string name="logout">Log out</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+</resources>

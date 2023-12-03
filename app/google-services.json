@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "5835676642",
+    "project_id": "micarrito-f666d",
+    "storage_bucket": "micarrito-f666d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5835676642:android:0a2a6773843e863ecc77bb",
+        "android_client_info": {
+          "package_name": "com.example.micarrito"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk9pD-0qRnOq16gyhdqPST4EV60_twxHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
