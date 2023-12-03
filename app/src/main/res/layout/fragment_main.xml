@@ -42,14 +42,15 @@
             android:backgroundTint="@color/black"
             android:paddingVertical="6dp"
             android:text="@string/log_in"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/signupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="1dp"
-            android:backgroundTint="@color/white"
+            android:layout_marginStart="1dp"
+            android:background="@color/transparent"
             android:paddingVertical="6dp"
             android:text="@string/sign_up"
             android:textColor="@color/black"

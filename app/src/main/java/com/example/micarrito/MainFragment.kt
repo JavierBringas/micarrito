@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.micarrito.databinding.FragmentMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
+
 /**
  * Represents the main entry point of the application.
  *
@@ -60,5 +61,4 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_signupFragment)
         }
     }
-
 }
