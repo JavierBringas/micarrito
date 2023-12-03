@@ -1,5 +1,6 @@
 package com.example.micarrito.adapter
 
+import android.graphics.Paint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.micarrito.databinding.ProductItemBinding
@@ -17,12 +18,40 @@ class ProductViewHolder(view: View) : ViewHolder(view) {
     /**
      * Renders the data of a product item by setting the name of the shopping list.
      *
-     * @param shoppingListModel The [ShoppingList] model containing the data to be displayed.
+     * @param productModel The [Product] model containing the data to be displayed.
+     * @param onDeleteClickListener The click listener for the delete button.
+     * @param onCheckClickListener The click listener for the CheckBox.
      */
-    fun render(productModel: Product, onClickListener: (Product) -> Unit) {
-        binding.nameTextView.text = productModel.name
+    fun render(
+        productModel: Product,
+        onDeleteClickListener: (Product) -> Unit,
+        onCheckClickListener: (Product) -> Unit
+    ) {
+        binding.nameCheckBox.text = productModel.name
+        binding.nameCheckBox.isChecked = productModel.checked
+
+        updateTextStrikeThrough(productModel.checked)
+
         binding.deleteButton.setOnClickListener {
-            onClickListener(productModel)
+            onDeleteClickListener(productModel)
+        }
+        binding.nameCheckBox.setOnClickListener {
+            onCheckClickListener(productModel)
         }
     }
+
+    /**
+     * Updates the strikethrough style of the CheckBox text based on the provided state.
+     * @param isChecked Indicates whether the [Product] is checked or not.
+     */
+    private fun updateTextStrikeThrough(isChecked: Boolean) {
+        binding.nameCheckBox.paintFlags =
+            if (isChecked) {
+                binding.nameCheckBox.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                binding.nameCheckBox.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+    }
 }
+
+

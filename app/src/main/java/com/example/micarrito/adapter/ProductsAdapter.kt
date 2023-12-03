@@ -13,7 +13,8 @@ import com.example.micarrito.model.Product
  */
 class ProductsAdapter(
     private val products: List<Product>,
-    private val onClickListener: (Product) -> Unit
+    private val onDeleteClickListener: (Product) -> Unit,
+    private val onCheckClickListener: (Product) -> Unit
 ) :
     RecyclerView.Adapter<ProductViewHolder>() {
 
@@ -50,6 +51,6 @@ class ProductsAdapter(
      */
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val item = products[position]
-        holder.render(item, onClickListener)
+        holder.render(item, onDeleteClickListener, onCheckClickListener)
     }
 }

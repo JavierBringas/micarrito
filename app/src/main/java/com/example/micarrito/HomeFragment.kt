@@ -101,8 +101,11 @@ class HomeFragment : Fragment() {
      */
     private fun setRecyclerView(products: ArrayList<Product>) {
         binding.productsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.productsRecyclerView.adapter =
-            ProductsAdapter(products) { delete(it.document) }
+        binding.productsRecyclerView.adapter = ProductsAdapter(
+            products,
+            onDeleteClickListener = { delete(it.document) },
+            onCheckClickListener = { check(it.document) }
+        )
     }
 
     /**
@@ -131,7 +134,7 @@ class HomeFragment : Fragment() {
             db.collection("users")
                 .document(userId)
                 .collection("products")
-                .add(hashMapOf("name" to productName))
+                .add(hashMapOf("name" to productName, "checked" to false))
                 .addOnSuccessListener { document ->
                     document.update("document", document.id)
                     load()
@@ -160,6 +163,28 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { documents ->
                 documents.forEach { document ->
                     delete(document.id)
+                }
+            }
+    }
+
+    /**
+     * Marks a product as checked or unchecked in Firestore based on [userId] and its document.
+     * @param document Product document ID to be updated.
+     */
+    private fun check(document: String) {
+        db.collection("users")
+            .document(userId)
+            .collection("products")
+            .document(document)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val product = documentSnapshot.toObject(Product::class.java)
+                if (product != null) {
+                    documentSnapshot.reference
+                        .update("checked", !product.checked)
+                        .addOnSuccessListener {
+                            load()
+                        }
                 }
             }
     }
